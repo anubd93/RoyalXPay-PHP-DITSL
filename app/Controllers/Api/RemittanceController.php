@@ -863,7 +863,7 @@ class RemittanceController extends ResourceController
             
             // If TAP API successful, optionally sync transactions with local DB
             if ($tapResponse['statusCode'] === 200 && isset($tapResponse['data'])) {
-                // You can optionally save TAP transactions to local DB here if needed
+                // optionally save TAP transactions to local DB here if needed
                 // foreach ($tapResponse['data'] as $txn) {
                 //     $this->transactionModel->syncTransactionFromTap($txn);
                 // }
