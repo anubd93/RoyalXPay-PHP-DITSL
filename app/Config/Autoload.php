@@ -86,7 +86,7 @@ class Autoload extends AutoloadConfig
      * @phpstan-var list<string>
      */
     public $files = [
-        APPPATH . 'Helpers/helper.php',
+        APPPATH . 'Helpers/Helper.php',
     ];
 
     /**
