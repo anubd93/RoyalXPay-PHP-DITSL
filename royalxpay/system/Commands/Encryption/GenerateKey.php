@@ -97,8 +97,8 @@ class GenerateKey extends BaseCommand
         }
 
         // force DotEnv to reload the new env vars
-        putenv('encryption.key');
-        unset($_ENV['encryption.key'], $_SERVER['encryption.key']);
+        putenv('ENCRYPTION_KEY');
+        unset($_ENV['ENCRYPTION_KEY'], $_SERVER['ENCRYPTION_KEY']);
         $dotenv = new DotEnv(ROOTPATH);
         $dotenv->load();
 
@@ -125,7 +125,7 @@ class GenerateKey extends BaseCommand
      */
     protected function setNewEncryptionKey(string $key, array $params): bool
     {
-        $currentKey = env('encryption.key', '');
+        $currentKey = env('ENCRYPTION_KEY', '');
 
         if ($currentKey !== '' && ! $this->confirmOverwrite($params)) {
             // Not yet testable since it requires keyboard input
@@ -164,9 +164,9 @@ class GenerateKey extends BaseCommand
         }
 
         $oldFileContents = (string) file_get_contents($envFile);
-        $replacementKey  = "\nencryption.key = {$newKey}";
+        $replacementKey  = "\nENCRYPTION_KEY = {$newKey}";
 
-        if (strpos($oldFileContents, 'encryption.key') === false) {
+        if (strpos($oldFileContents, 'ENCRYPTION_KEY') === false) {
             return file_put_contents($envFile, $replacementKey, FILE_APPEND) !== false;
         }
 
@@ -174,7 +174,7 @@ class GenerateKey extends BaseCommand
 
         if ($newFileContents === $oldFileContents) {
             $newFileContents = preg_replace(
-                '/^[#\s]*encryption.key[=\s]*(?:hex2bin\:[a-f0-9]{64}|base64\:(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?)$/m',
+                '/^[#\s]*ENCRYPTION_KEY[=\s]*(?:hex2bin\:[a-f0-9]{64}|base64\:(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?)$/m',
                 $replacementKey,
                 $oldFileContents
             );
@@ -194,6 +194,6 @@ class GenerateKey extends BaseCommand
             $escaped = "[{$escaped}]*";
         }
 
-        return "/^[#\\s]*encryption.key[=\\s]*{$escaped}$/m";
+        return "/^[#\\s]*ENCRYPTION_KEY[=\\s]*{$escaped}$/m";
     }
 }

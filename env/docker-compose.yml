@@ -6,9 +6,6 @@ services:
     container_name: royalxpay-app
     ports:
       - "8080:80"
-    # Load environment variables from repository .env file (makes TAP_REMITTANCE_BASE_URL available)
-    env_file:
-      - .env
     # volumes:
     #   - ./writable:/var/www/html/writable
     #   - ./public/uploads:/var/www/html/public/uploads
