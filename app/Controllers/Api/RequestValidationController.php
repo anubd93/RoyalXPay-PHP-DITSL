@@ -45,8 +45,8 @@ class RequestValidationController extends BaseController
             'statusCode' => 200,
             'message'    => 'valid request',
             'data'       => [
-                'project_id' => 'royalXpay',
-                'action'     => 'validation_check',
+                'project_id' => 'RoyalXpay',
+                'action'     => 'Validation Check',
             ],
         ])->setStatusCode(200);
     }
