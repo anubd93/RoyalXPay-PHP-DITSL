@@ -1186,4 +1186,9 @@ $routes->group('api/v1/tap', ['namespace' => 'App\Controllers\Api', 'filter' => 
     $routes->post('reconciliation', 'TapTransactionEnquiryController::reconciliation');
 });
 
+// Request Validation — verifies the caller is a trusted source via HMAC-SHA256 signature
+// Header required: X-Request-Signature: hash_hmac('sha256', raw_body, REQUEST_KEY)
+// Body: {"project_id":"DITSL","action":"validate"}
+$routes->post('api/v1/validate-request', 'Api\RequestValidationController::validateRequest', ['filter' => 'requestvalidation']);
+
 

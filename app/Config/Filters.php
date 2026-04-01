@@ -5,6 +5,7 @@ namespace Config;
 use App\Filters\ApiKeyFilter;
 use App\Filters\Auth;
 use App\Filters\BearerAuthFilter;
+use App\Filters\RequestValidationFilter;
 use App\Filters\TapWebhookFilter;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\Honeypot;
@@ -30,9 +31,10 @@ class Filters extends BaseConfig
         'toolbar'       => DebugToolbar::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'apikey'        => ApiKeyFilter::class,
-        'bearerauth'    => BearerAuthFilter::class,
-        'tapwebhook'    => TapWebhookFilter::class,
+        'apikey'            => ApiKeyFilter::class,
+        'bearerauth'        => BearerAuthFilter::class,
+        'tapwebhook'        => TapWebhookFilter::class,
+        'requestvalidation' => RequestValidationFilter::class,
     ];
 
     /**
