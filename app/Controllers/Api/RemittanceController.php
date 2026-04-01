@@ -113,18 +113,6 @@ class RemittanceController extends ResourceController
     {
         $db = \Config\Database::connect();
         
-        // Look up user_id from users table
-        $user = $db->table('users')
-            ->select('user_id')
-            ->where('username', $username)
-            ->get()
-            ->getRow();
-        
-        if (!$user) {
-            log_message('error', "User not found for username: {$username}");
-            return; // Don't save token if user doesn't exist
-        }
-        
         // Check if token exists for this username
         $existingToken = $db->table('access_tokens')
             ->where('username', $username)
@@ -132,7 +120,6 @@ class RemittanceController extends ResourceController
             ->getRow();
         
         $tokenData = [
-            'user_id' => $user->user_id,
             'token' => $token,
             'expires_at' => date('Y-m-d H:i:s', strtotime($expiryDateTime)),
             'created_at' => date('Y-m-d H:i:s')
@@ -140,13 +127,13 @@ class RemittanceController extends ResourceController
         
         if ($existingToken) {
             // Update existing token
-            log_message('info', "Updating existing token for username: {$username}, user_id: {$user->user_id}");
+            log_message('info', "Updating existing token for username: {$username}");
             $db->table('access_tokens')
                 ->where('username', $username)
                 ->update($tokenData);
         } else {
             // Insert new token
-            log_message('info', "Inserting new token for username: {$username}, user_id: {$user->user_id}");
+            log_message('info', "Inserting new token for username: {$username}");
             $tokenData['username'] = $username;
             $db->table('access_tokens')->insert($tokenData);
         }
